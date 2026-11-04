@@ -41,7 +41,7 @@ class Pasien extends Model
     protected function casts(): array
     {
         return [
-            'tgl_lahir' => 'date',
+            'tanggal_lahir' => 'date',
         ];
     }
 

@@ -16,3 +16,14 @@ Salin blok di bawah untuk setiap bug yang Anda temukan.
   php artisan migrate
   ```
   Setelah `php artisan migrate` sukses (tabel `sessions`, `users`, `cache`, `jobs`, `dokter`, `pasien` dibuat), error hilang dan `GET /` kembali normal.
+
+## Bug 2
+
+- Gejala: `Call to a member function translatedFormat() on string` saat membuka `GET /pasien` (route `pasien.daftar`).
+- Lokasi (file:baris): `app/Models/Pasien.php:44` (`casts()`), dipakai di `resources/views/pasien/daftar.blade.php:65`.
+- Penyebab: Nama kolom pada cast salah: `'tgl_lahir' => 'date'`, padahal kolom tabel `pasien` adalah `tanggal_lahir`. Karena key cast tidak cocok dengan nama atribut, `$pasien->tanggal_lahir` tetap berupa string mentah dari DB (bukan `Carbon`), sehingga `translatedFormat()` gagal dipanggil pada string. Efek samping: accessor `umur()` juga error karena `$this->tanggal_lahir->age`.
+- Perbaikan: Ubah key cast menjadi nama kolom yang benar:
+  ```php
+  'tanggal_lahir' => 'date',
+  ```
+  Setelah itu `$pasien->tanggal_lahir` menjadi instance `Carbon` dan `translatedFormat('d-M-Y')` serta `umur` berjalan normal.
