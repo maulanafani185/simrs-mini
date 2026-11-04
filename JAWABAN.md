@@ -1,7 +1,8 @@
 # Jawaban Tes Debugging SIMRS Mini
 
-Nama:
-Tanggal:
+Nama: Ahmad Fani Maulana
+
+Tanggal: 4 November 2026
 
 Salin blok di bawah untuk setiap bug yang Anda temukan.
 
@@ -28,4 +29,4 @@ Salin blok di bawah untuk setiap bug yang Anda temukan.
 - Gejala: Hapus Pasien tidak bekerja
 - Lokasi (file:baris): simrs-mini\resources\views\dokter\detail.blade.php Line 29 (<form method="POST" action="{{ route('dokter.hapus', $dokter) }}" class="d-inline" onsubmit="return confirm(@js('Hapus data '.$dokter->nama.'? Data yang dihapus tidak dapat dikembalikan.'))">)
 - Penyebab: Terjadi salah sasaran route dan variabel pada form hapus pasien. dialam file, form justru memanggil rute untuk menghapus dokter (dokter.hapus) variabel $dokter.
-- Perbaikan: 
+- Perbaikan: mengubah rute yang benar ke <form method="POST" action="{{ route('pasien.hapus', $pasien) }}" class="d-inline" onsubmit="return confirm(@js('Hapus data '.$dokter->nama.'? Data yang dihapus tidak dapat dikembalikan.'))">
